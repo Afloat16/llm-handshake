@@ -207,7 +207,7 @@ class CLITests(unittest.TestCase):
             with patch(__name__ + ".main", side_effect=capture):
                 status, _, _ = invoke(["--version"])
         self.assertEqual(status, 0)
-        self.assertEqual(observed["SystemRoot"], "system-root-sentinel")
+        self.assertEqual({key.upper(): value for key, value in observed.items()}["SYSTEMROOT"], "system-root-sentinel")
         self.assertNotIn("OPENAI_API_KEY", observed)
 
     def test_help(self):
