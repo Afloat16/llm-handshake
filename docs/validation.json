@@ -1,0 +1,59 @@
+{
+  "recorded_on": "2026-09-30",
+  "tool_version": "0.1.0",
+  "environment": {
+    "implementation": "CPython",
+    "python": "3.13.5",
+    "os": "Linux",
+    "architecture": "x86_64"
+  },
+  "test_command": "python scripts/run_tests.py",
+  "tests": {
+    "run": 200,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "coverage_scope": "Runtime package only; branch coverage enabled; subprocess coverage not combined",
+  "coverage": {
+    "covered_lines": 1078,
+    "num_statements": 1103,
+    "percent_covered": 97.32994278448824,
+    "percent_covered_display": "97",
+    "missing_lines": 25,
+    "excluded_lines": 0,
+    "percent_statements_covered": 97.73345421577515,
+    "percent_statements_covered_display": "98",
+    "num_branches": 470,
+    "num_partial_branches": 15,
+    "covered_branches": 453,
+    "missing_branches": 17,
+    "percent_branches_covered": 96.38297872340425,
+    "percent_branches_covered_display": "96"
+  },
+  "healthy_demo": {
+    "pass": 7,
+    "warn": 0,
+    "fail": 0,
+    "skip": 0
+  },
+  "broken_demo": {
+    "pass": 4,
+    "warn": 1,
+    "fail": 2,
+    "skip": 0
+  },
+  "synthetic_comparison_regressions": 3,
+  "checks": {
+    "real_local_tls": true,
+    "reproducible_zipapp": true,
+    "isolated_zipapp": true,
+    "offline_clean_wheel_install": true
+  },
+  "not_verified": [
+    "Real model-provider compatibility",
+    "Remote GitHub Actions matrix",
+    "Actual GitHub create/push",
+    "PyPI publication"
+  ]
+}

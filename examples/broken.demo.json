@@ -1,0 +1,211 @@
+{
+  "schema": "llm-handshake.report.v1",
+  "mode": "demo",
+  "tool_version": "0.1.0",
+  "created_at": "2026-09-30T07:11:14+00:00",
+  "target": {
+    "origin": "http://127.0.0.1:33797",
+    "model": "handshake-demo",
+    "id": "1e79f4f22ffbfe5978e9faba71d97192d529e7fa1f4056e3e7d232f365f3496d"
+  },
+  "contract": {
+    "suite_version": 1,
+    "token_limit_field": "max_tokens",
+    "max_output_tokens": 128
+  },
+  "plan": {
+    "probes": [
+      "models",
+      "chat",
+      "stream",
+      "stream-usage",
+      "tools",
+      "tool-stream",
+      "json"
+    ],
+    "max_requests": 7,
+    "timeout_seconds": 20.0,
+    "max_response_bytes": 1048576
+  },
+  "summary": {
+    "pass": 4,
+    "warn": 1,
+    "fail": 2,
+    "skip": 0
+  },
+  "requests_attempted": 7,
+  "inference_requests_attempted": 6,
+  "results": [
+    {
+      "name": "models",
+      "findings": [
+        {
+          "status": "pass",
+          "code": "models_received",
+          "message": "The model-list response was readable. Model identifiers are not saved.",
+          "hint": "",
+          "path": ""
+        }
+      ],
+      "metrics": {
+        "duration_ms": 0.723,
+        "response_bytes": 73,
+        "model_count": 1,
+        "selected_model_listed": true
+      },
+      "http_status": 200,
+      "requests": 1,
+      "status": "pass"
+    },
+    {
+      "name": "chat",
+      "findings": [
+        {
+          "status": "pass",
+          "code": "chat_received",
+          "message": "An assistant text response was received.",
+          "hint": "",
+          "path": ""
+        }
+      ],
+      "metrics": {
+        "duration_ms": 0.8,
+        "response_bytes": 284,
+        "prompt_tokens": 12,
+        "completion_tokens": 4,
+        "total_tokens": 16
+      },
+      "http_status": 200,
+      "requests": 1,
+      "status": "pass"
+    },
+    {
+      "name": "stream",
+      "findings": [
+        {
+          "status": "pass",
+          "code": "stream_inspected",
+          "message": "Stream framing and payloads were inspected. Raw events are not saved.",
+          "hint": "",
+          "path": ""
+        }
+      ],
+      "metrics": {
+        "duration_ms": 1.175,
+        "response_bytes": 821,
+        "event_count": 5,
+        "first_delta_ms": 0.99
+      },
+      "http_status": 200,
+      "requests": 1,
+      "status": "pass"
+    },
+    {
+      "name": "stream-usage",
+      "findings": [
+        {
+          "status": "warn",
+          "code": "usage_missing",
+          "message": "Token usage was not reported.",
+          "hint": "Do not infer zero usage. Inspect the provider or gateway accounting settings.",
+          "path": "/usage"
+        },
+        {
+          "status": "pass",
+          "code": "stream_inspected",
+          "message": "Stream framing and payloads were inspected. Raw events are not saved.",
+          "hint": "",
+          "path": ""
+        }
+      ],
+      "metrics": {
+        "duration_ms": 1.038,
+        "response_bytes": 821,
+        "event_count": 5,
+        "first_delta_ms": 0.813
+      },
+      "http_status": 200,
+      "requests": 1,
+      "status": "warn"
+    },
+    {
+      "name": "tools",
+      "findings": [
+        {
+          "status": "pass",
+          "code": "tool_sample",
+          "message": "The tool response was inspected. No function was executed.",
+          "hint": "",
+          "path": ""
+        }
+      ],
+      "metrics": {
+        "duration_ms": 0.678,
+        "response_bytes": 414,
+        "prompt_tokens": 12,
+        "completion_tokens": 4,
+        "total_tokens": 16
+      },
+      "http_status": 200,
+      "requests": 1,
+      "status": "pass"
+    },
+    {
+      "name": "tool-stream",
+      "findings": [
+        {
+          "status": "fail",
+          "code": "tool_arguments",
+          "message": "The returned JSON does not match the requested integer-object sample.",
+          "hint": "Inspect structured-output or tool-argument serialization for the selected model.",
+          "path": "/tool_calls/0/function/arguments"
+        },
+        {
+          "status": "pass",
+          "code": "stream_inspected",
+          "message": "Stream framing and payloads were inspected. Raw events are not saved.",
+          "hint": "",
+          "path": ""
+        }
+      ],
+      "metrics": {
+        "duration_ms": 1.197,
+        "response_bytes": 1232,
+        "event_count": 6,
+        "first_delta_ms": 0.899
+      },
+      "http_status": 200,
+      "requests": 1,
+      "status": "fail"
+    },
+    {
+      "name": "json",
+      "findings": [
+        {
+          "status": "fail",
+          "code": "json_schema_sample",
+          "message": "The returned JSON does not match the requested integer-object sample.",
+          "hint": "Inspect structured-output or tool-argument serialization for the selected model.",
+          "path": "/choices/0/message/content"
+        },
+        {
+          "status": "pass",
+          "code": "json_sample",
+          "message": "One structured-output sample was inspected; schema enforcement is not proven.",
+          "hint": "",
+          "path": ""
+        }
+      ],
+      "metrics": {
+        "duration_ms": 0.679,
+        "response_bytes": 296,
+        "prompt_tokens": 12,
+        "completion_tokens": 4,
+        "total_tokens": 16
+      },
+      "http_status": 200,
+      "requests": 1,
+      "status": "fail"
+    }
+  ]
+}

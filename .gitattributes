@@ -1,0 +1,4 @@
+* text=auto eol=lf
+*.pyz binary
+*.whl binary
+*.zip binary

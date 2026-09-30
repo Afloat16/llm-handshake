@@ -1,0 +1,25 @@
+{
+  "schema": "llm-handshake.comparison.v1",
+  "same_target": false,
+  "regressions": 3,
+  "changes": [
+    {
+      "probe": "stream-usage",
+      "before": "pass",
+      "after": "warn",
+      "kind": "regression"
+    },
+    {
+      "probe": "tool-stream",
+      "before": "pass",
+      "after": "fail",
+      "kind": "regression"
+    },
+    {
+      "probe": "json",
+      "before": "pass",
+      "after": "fail",
+      "kind": "regression"
+    }
+  ]
+}

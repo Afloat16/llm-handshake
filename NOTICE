@@ -1,0 +1,19 @@
+LLM Handshake
+Copyright 2026 Afloat16
+
+The project source, synthetic fixtures, tests, and documentation are licensed
+under the MIT License in LICENSE.
+
+No third-party project source is vendored into this repository. The runtime
+uses the Python standard library; the Python interpreter is not distributed
+inside the zip application. Setuptools and coverage are optional external
+build/development tools, not bundled runtime dependencies.
+
+The protocol specifications, issue reports, and project READMEs that informed
+the scope and design are individually acknowledged in docs/REFERENCES.md.
+Names including OpenAI, Ollama, LiteLLM, promptfoo, and GitHub identify their
+respective products or projects. No affiliation or endorsement is implied.
+
+When adding third-party material, retain its required copyright and license
+notices and update the references. This project's license does not relicense
+external documentation or linked repositories.

@@ -1,0 +1,26 @@
+{
+  "observed_on": "2026-09-30",
+  "method": "Rounded star counts displayed on public GitHub repository pages; not exact REST API counts.",
+  "repositories": [
+    {
+      "repository": "BerriAI/litellm",
+      "displayed_stars": "59.9k",
+      "url": "https://github.com/BerriAI/litellm"
+    },
+    {
+      "repository": "openai/openai-python",
+      "displayed_stars": "31.7k",
+      "url": "https://github.com/openai/openai-python"
+    },
+    {
+      "repository": "promptfoo/promptfoo",
+      "displayed_stars": "25.6k",
+      "url": "https://github.com/promptfoo/promptfoo"
+    },
+    {
+      "repository": "simonw/llm",
+      "displayed_stars": "12.6k",
+      "url": "https://github.com/simonw/llm"
+    }
+  ]
+}
