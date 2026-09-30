@@ -5,7 +5,18 @@ import json
 import threading
 from contextlib import contextmanager
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
+from socketserver import TCPServer
 from typing import Any, Iterator
+
+
+class _LoopbackHTTPServer(ThreadingHTTPServer):
+    """Fixed-address local fixtures do not need reverse DNS during binding."""
+
+    def server_bind(self) -> None:
+        TCPServer.server_bind(self)
+        self.server_name = "localhost"
+        self.server_port = self.server_address[1]
+
 
 USAGE = {"prompt_tokens": 12, "completion_tokens": 4, "total_tokens": 16}
 
@@ -115,7 +126,7 @@ def mock_server(broken: bool = False) -> Iterator[str]:
                 content = '{"value":"7"}' if broken else '{"value":7}'
                 self.send_json(completion(content if payload.get("response_format") else "READY", tool=tool))
 
-    server = ThreadingHTTPServer(("127.0.0.1", 0), Handler)
+    server = _LoopbackHTTPServer(("127.0.0.1", 0), Handler)
     server.daemon_threads = True
     worker = threading.Thread(target=server.serve_forever, kwargs={"poll_interval": 0.02}, daemon=True)
     worker.start()

@@ -28,6 +28,15 @@ def normalize_url(value: str, allow_http: bool = False) -> str:
         raise ValueError("Credentials, query strings, and fragments are not allowed in the base URL.")
     if port == 0:
         raise ValueError("The URL port must be between 1 and 65535.")
+    # Older urllib versions accept bracketed non-IP hostnames. Validate the
+    # authority ourselves so every supported interpreter enforces the same rule.
+    if "[" in u.netloc or "]" in u.netloc:
+        if not re.fullmatch(r"\[[^\[\]]+\](?::[0-9]+)?", u.netloc):
+            raise ValueError("Bracketed hosts must use a valid IPv6 authority.")
+        try:
+            ipaddress.IPv6Address(host)
+        except ValueError:
+            raise ValueError("Bracketed hosts must be valid IPv6 addresses.") from None
     try:
         loopback = ipaddress.ip_address(host).is_loopback
     except ValueError:

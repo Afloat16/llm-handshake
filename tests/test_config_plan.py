@@ -1,5 +1,6 @@
 import unittest
 from unittest.mock import patch
+from urllib.parse import SplitResult
 
 from llm_handshake import Config, run_checks
 from llm_handshake.config import PROBES, normalize_url, select_probes
@@ -32,6 +33,22 @@ class ConfigTests(unittest.TestCase):
         for value in ("", "host/v1", "file:///etc/passwd", "https://", "https://bad host/v1", "https://host:0", "https://host:99999", "https://[invalid]/", "https://host\\evil", "https://中文/v1", "https://host/%0d%0Afoo", "https://host:bad", "https://bad|host"):
             with self.subTest(url=value), self.assertRaises(ValueError):
                 normalize_url(value)
+
+    def test_bracketed_host_validation_is_independent_of_parser_version(self):
+        for authority in ("[invalid]", "[localhost]", "[127.0.0.1]", "[v1.example]"):
+            parsed = SplitResult("https", authority, "/v1", "", "")
+            with self.subTest(authority=authority), patch(
+                "llm_handshake.config.urlsplit", return_value=parsed
+            ), self.assertRaises(ValueError):
+                normalize_url("https://" + authority + "/v1")
+
+    def test_bracketed_authority_rejects_surrounding_text(self):
+        for authority in ("prefix[::1]", "[::1]suffix", "[::1]:"):
+            parsed = SplitResult("https", authority, "/v1", "", "")
+            with self.subTest(authority=authority), patch(
+                "llm_handshake.config.urlsplit", return_value=parsed
+            ), self.assertRaises(ValueError):
+                normalize_url("https://" + authority + "/v1")
 
     def test_full_routes_rejected(self):
         for path in ("/v1/models", "/chat/completions", "/v1/responses"):

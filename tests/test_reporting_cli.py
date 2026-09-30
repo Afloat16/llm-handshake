@@ -31,7 +31,12 @@ def sample():
 
 def invoke(argv, env=None):
     output, error = io.StringIO(), io.StringIO()
-    with patch.dict(os.environ, env or {}, clear=True), contextlib.redirect_stdout(output), contextlib.redirect_stderr(error):
+    # Isolate application settings, not the operating system. Windows runtimes
+    # can require SystemRoot and other platform variables during local I/O.
+    environment = {key: value for key, value in os.environ.items()
+                   if not key.startswith(("OPENAI_", "HANDSHAKE_")) and key != "MY_KEY"}
+    environment.update(env or {})
+    with patch.dict(os.environ, environment, clear=True), contextlib.redirect_stdout(output), contextlib.redirect_stderr(error):
         try:
             status = main(argv)
         except SystemExit as exception:
@@ -191,6 +196,20 @@ class ReportTests(unittest.TestCase):
 
 
 class CLITests(unittest.TestCase):
+    def test_invocation_preserves_system_settings_not_provider_settings(self):
+        observed = {}
+
+        def capture(argv):
+            observed.update(os.environ)
+            return 0
+
+        with patch.dict(os.environ, {"SystemRoot": "system-root-sentinel", "OPENAI_API_KEY": "ambient-key"}):
+            with patch(__name__ + ".main", side_effect=capture):
+                status, _, _ = invoke(["--version"])
+        self.assertEqual(status, 0)
+        self.assertEqual(observed["SystemRoot"], "system-root-sentinel")
+        self.assertNotIn("OPENAI_API_KEY", observed)
+
     def test_help(self):
         status, output, _ = invoke(["--help"])
         self.assertEqual(status, 0)

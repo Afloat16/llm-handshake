@@ -4,11 +4,11 @@ import json
 import threading
 import time
 from contextlib import contextmanager
-from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
+from http.server import BaseHTTPRequestHandler
 from typing import Any
 
 from llm_handshake import Config
-from llm_handshake.mock import completion, encode_stream, stream_chunks
+from llm_handshake.mock import _LoopbackHTTPServer, completion, encode_stream, stream_chunks
 from llm_handshake.sse import SSEParser
 from llm_handshake.transport import WireResponse
 from llm_handshake.validators import inspect
@@ -78,7 +78,7 @@ def endpoint(body=b'{"data":[]}', status=200, mime="application/json", headers=N
         do_GET = handle_request
         do_POST = handle_request
 
-    server = ThreadingHTTPServer(("127.0.0.1", 0), Handler)
+    server = _LoopbackHTTPServer(("127.0.0.1", 0), Handler)
     if ssl_context:
         server.socket = ssl_context.wrap_socket(server.socket, server_side=True)
     server.daemon_threads = True

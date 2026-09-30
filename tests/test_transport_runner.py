@@ -133,14 +133,15 @@ class TransportTests(unittest.TestCase):
                 self.request(base, probes=("stream",))
         self.assertEqual(error.exception.code, "event_limit")
 
-    def test_refused_connection(self):
+    def test_bound_nonlistener_fails_with_platform_network_error(self):
         with socket.socket() as listener:
             listener.bind(("127.0.0.1", 0))
             port = listener.getsockname()[1]
-            # Bound but deliberately not listening; another process cannot claim it.
+            # A bound, non-listening port can refuse immediately or drop packets,
+            # depending on the OS. Both outcomes must fail, without a long wait.
             with self.assertRaises(TransportError) as error:
-                self.request(f"http://127.0.0.1:{port}/v1")
-        self.assertEqual(error.exception.code, "connection_error")
+                self.request(f"http://127.0.0.1:{port}/v1", timeout=0.25)
+        self.assertIn(error.exception.code, ("connection_error", "timeout"))
 
     def test_invalid_ca_sends_nothing(self):
         with patch("llm_handshake.transport.http.client.HTTPSConnection") as connection:

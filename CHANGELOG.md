@@ -1,5 +1,15 @@
 # Changelog
 
+## Unreleased
+
+### Fixed
+
+- Validate bracketed URL authorities explicitly rather than depending on the interpreter's URL-parser version.
+- Preserve operating-system environment settings while isolating provider configuration in CLI tests.
+- Avoid unnecessary reverse DNS when starting fixed-loopback demo and test servers.
+- Accept OS-specific refusal or timeout behavior for bound, non-listening sockets while retaining deterministic error-classification coverage.
+- Add regression coverage for bracketed hosts, test-environment isolation, and DNS-free local fixtures.
+
 ## 0.1.0 — 2026-09-30
 
 Initial implementation, prepared for publication.
