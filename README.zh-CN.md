@@ -3,17 +3,21 @@
 **在接入应用之前，发现大模型接口的不兼容行为。**
 
 [English](README.md) · [简体中文](README.zh-CN.md)  
-Python 3.10+ · MIT · 零运行时依赖
+Python 3.10+ · MIT · 零运行时依赖 · 0.1.0
 
 LLM Handshake 是一个小型命令行诊断工具，用来检查 OpenAI-compatible 大模型接口。先查看完整请求计划，再执行需要的检查；更换模型或升级网关后，还能比较两份报告，发现回归。
 
 一次普通聊天成功，并不代表流式用量、工具参数拼接、结构化输出都能正常工作。本工具把这些能力分开检查，不需要仪表盘、数据库、厂商 SDK，也不读取你的业务文件。
 
+[快速开始](#不需要密钥直接体验) · [检查接口](#检查你的接口) · [比较报告](#升级后检查回归) · [范围与限制](#范围与限制)
+
 ## 不需要密钥，直接体验
 
-在源码目录中运行：
+准备 Python 3.10 或更新版本，克隆仓库后运行演示：
 
 ```sh
+git clone https://github.com/Afloat16/llm-handshake.git
+cd llm-handshake
 python scripts/build_zipapp.py
 python dist/llm-handshake.pyz demo
 ```
@@ -237,3 +241,7 @@ python -I dist/llm-handshake.pyz demo
 [R6]: https://platform.openai.com/docs/api-reference/chat/create
 [R8]: https://github.com/beranekio/openai-compatibility-tester
 [R9]: https://github.com/avelrl/openai-compatible-tester
+
+## 相关开源项目
+
+按用途浏览 [Afloat16 项目导航](https://github.com/Afloat16/research-to-fix/blob/main/docs/PROJECTS.md)，选择需求论证、调研修复、任务验收、接口诊断、通知、MCP 建议或本地重建工具。

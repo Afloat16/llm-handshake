@@ -3,17 +3,21 @@
 **Find interface mismatches before they become application bugs.**
 
 [English](README.md) · [简体中文](README.zh-CN.md)  
-Python 3.10+ · MIT · Zero runtime dependencies
+Python 3.10+ · MIT · Zero runtime dependencies · Version 0.1.0
 
 LLM Handshake is a small command-line diagnostic for OpenAI-compatible LLM endpoints. Preview the exact requests, run only the checks you need, and compare reports after a model or gateway change.
 
 A successful chat request does not tell you whether streaming usage, tool-call arguments, or structured output will work. Handshake checks those behaviors separately, without a dashboard, database, provider SDK, or user documents.
 
+[Quick start](#try-it-without-a-key) · [Endpoint checks](#check-your-endpoint) · [Report comparison](#catch-a-regression-after-an-upgrade) · [Scope](#scope-and-limitations)
+
 ## Try it without a key
 
-From a source checkout:
+Clone the repository and run the demo with Python 3.10 or later:
 
 ```sh
+git clone https://github.com/Afloat16/llm-handshake.git
+cd llm-handshake
 python scripts/build_zipapp.py
 python dist/llm-handshake.pyz demo
 ```
@@ -237,3 +241,7 @@ Optional coverage: install the development extra, then run `python -m coverage r
 [R6]: https://platform.openai.com/docs/api-reference/chat/create
 [R8]: https://github.com/beranekio/openai-compatibility-tester
 [R9]: https://github.com/avelrl/openai-compatible-tester
+
+## Related projects
+
+See the [Afloat16 project guide](https://github.com/Afloat16/research-to-fix/blob/main/docs/PROJECTS.md) for requirements debate, evidence-driven debugging, task checks, endpoint diagnostics, notifications, MCP advice, and local reconstruction.
